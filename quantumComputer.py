@@ -5,7 +5,7 @@ FILENAME = "test"
 
 def main():
     with open(FILENAME) as f:
-        code = [l.split() for line in f.read().splitlines() if len(l := line.strip()) > 0 and l[0] != "#"]
+        code = [line.strip().split() for line in f.read().splitlines() if len(line.strip()) > 0 and line.strip()[0] != "#"]
     circuit = Circuit()
     for inst in code:
         if inst[0] == "qubits":

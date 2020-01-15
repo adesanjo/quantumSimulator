@@ -1,4 +1,3 @@
-from __future__ import annotations
 from typing import Dict, Tuple, List, Optional
 
 import random
@@ -22,13 +21,13 @@ class Circuit:
     def run(self, shots: int = 1024) -> Dict[Tuple[int], int]:
         results = {}
         state = self.runSingle()
-        for i in range(shots):
+        for _ in range(shots):
             bits = f"{state.measure():0{self.nQubits}b}"
             results[bits] = results.get(bits, 0) + 1
         sortedResults = {result: results[result] for result in sorted(results)}
         return sortedResults
     
-    def runSingle(self) -> List[State]:
+    def runSingle(self) -> "List[State]":
         state = State(self.nQubits)
         if PRINT_STATES:
             print()
