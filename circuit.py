@@ -21,22 +21,21 @@ class Circuit:
     
     def run(self, shots: int = 1024) -> Dict[Tuple[int], int]:
         results = {}
+        state = self.runSingle()
         for i in range(shots):
-            state = self.runSingle(i == 0)
             bits = f"{state.measure():0{self.nQubits}b}"
             results[bits] = results.get(bits, 0) + 1
         sortedResults = {result: results[result] for result in sorted(results)}
         return sortedResults
     
-    def runSingle(self, isFirst: bool) -> List[State]:
+    def runSingle(self) -> List[State]:
         state = State(self.nQubits)
-        printStates = isFirst and PRINT_STATES
-        if printStates:
+        if PRINT_STATES:
             print()
             print(state)
         for gate in self.gates:
             state.applyGate(gate)
-            if printStates:
+            if PRINT_STATES:
                 print()
                 print(gate)
                 print(state)
