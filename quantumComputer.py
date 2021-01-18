@@ -1,11 +1,17 @@
+import sys
+
 from circuit import Circuit
 import gates as g
 
 FILENAME = "test"
 
 def main():
+    global FILENAME
+    if len(sys.argv) > 1:
+        FILENAME = sys.argv[1]
+    
     with open(FILENAME) as f:
-        code = [line.strip().split() for line in f.read().splitlines() if len(line.strip()) > 0 and line.strip()[0] != "#"]
+        code = [line.split() for rawLine in f.read().splitlines() if len((line := rawLine.strip())) > 0 and line[0] != "#"]
     circuit = Circuit()
     for inst in code:
         if inst[0] == "qubits":
